@@ -8,7 +8,7 @@ namespace QuizzApp.Data
 		public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options) { }
 		public DbSet<UserAccount> UsersAccounts { get; set; }
 		public DbSet<UserCredentials> UserCredentials { get; set; }
-		public DbSet<Test> Tests { get; set; }
+		public DbSet<Quiz> Tests { get; set; }
 		public DbSet<Result> Results { get; set; }
 		public DbSet<Question> Questions { get; set; }
 		public DbSet<Answer> Answers { get; set; }
@@ -31,7 +31,7 @@ namespace QuizzApp.Data
 				etb.Property(uc => uc.Password).IsRequired();
 			});
 
-			modelBuilder.Entity<Test>(etb =>
+			modelBuilder.Entity<Quiz>(etb =>
 			{
 				etb.Property(t => t.Title).IsRequired();
 				etb.HasMany(t => t.Results).WithOne(r => r.Test).HasForeignKey(t => t.TestId);

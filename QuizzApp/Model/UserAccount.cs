@@ -13,6 +13,6 @@ namespace QuizzApp.Model
         public string LastName { get; set; }
         public string Email { get; set; }
         public UserCredentials UserCredentials { get; set; }
-        public List<Test> Test { get; set; } = new List<Test>();
+        public List<Quiz> Test { get; set; } = new List<Quiz>();
     }
 }

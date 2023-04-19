@@ -1,0 +1,24 @@
+﻿@page
+@model QuizzApp.Pages.Account.LoginModel
+@{
+}
+
+<div class="content mt-5 p-5">
+    <div class="row justify-content-center ">
+        <form method="post" class="col-3 p-3 rounded">
+            <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+            <label asp-for="UserCredentials.Username" class="form-label col-6">User Name</label>
+            <input asp-for="UserCredentials.Username" type="text" class="form-control col-3" placeholder="Your Login" />
+            <span asp-validation-for="UserCredentials.Username" class="text-danger"></span>
+            <label asp-for="UserCredentials.Password" class="form-label col-6 mt-3"></label>
+            <input asp-for="UserCredentials.Password" type="password" class="form-control col-6" id="password-input" placeholder="Your Password" />
+            <span asp-validation-for="UserCredentials.Password" class="text-danger"></span>
+            <div class="col-12 text-center">
+                <button type="submit" class="btn btn-primary mt-4 ">Log in</button>
+            </div>
+            <div class="col-12 text-center pt-4">
+                <a class="col-3" asp-page="/Account/Register">Create account</a>
+            </div>
+        </form>
+    </div>
+</div>
