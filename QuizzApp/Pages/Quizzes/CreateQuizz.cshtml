@@ -1,6 +1,7 @@
 ﻿@page
 @model QuizzApp.Pages.Quizzes.CreateQuizzModel
 @{
+	var novalidate = Model.EnableClientValidation ? "" : "novalidate";
 }
 
 <h2 class='modal-header text-primary'>Create Your quizz</h2>
@@ -9,23 +10,20 @@
 		<div class='question container mb-4'>
 			<div class='row'>
 				<div class='col-12'>
-					<input type='text' class='form-control form-control-lg' placeholder='Add question' />
+					<input asp-for='Questions[0].QuestionContent' type='text' class='question-input form-control form-control-lg' placeholder='Add question'/>
+					<span asp-validation-for="Questions[0].QuestionContent" class="text-danger"></span>
 				</div>
 			</div>
 			<div class='row mt-3'>
 				<div class='col-11'>
-					<input type='text' class='form-control' placeholder='Add answer' />
-				</div>
-				<div class='col-1'>
-					<button type='button' class='remove-answer btn btn-primary col-12'>-</button>
+					<input asp-for='Questions[0].Answers[0].AnswersContent' type='text' class='answer-input form-control' placeholder='Add answer'/>
+					<span asp-validation-for="Questions[0].Answers[0].AnswersContent" class="text-danger"></span>
 				</div>
 			</div>
 			<div class='row mt-2'>
 				<div class='col-11'>
-					<input type='text' class='form-control' placeholder='Add answer' />
-				</div>
-				<div class='col-1'>
-					<button type='button' class='remove-answer btn btn-primary col-12'>-</button>
+					<input asp-for='Questions[0].Answers[1].AnswersContent' type='text' class='answer-input form-control' placeholder='Add answer' />
+					<span asp-validation-for="Questions[0].Answers[1].AnswersContent" class="text-danger"></span>
 				</div>
 			</div>
 			<button type='button' class='add-answer btn btn-primary mt-2'>+</button>
@@ -37,60 +35,102 @@
 	</div>
 	
 	<div class='row justify-content-center'>
-		<button type='submit' class='btn btn-lg btn-primary mt-3 col-2'>Create quizz</button>
+		<button type='submit' class='create_quiz btn btn-lg btn-primary mt-3 col-2'>Create quiz</button>
 	</div>
 </form>
 
-
 @section Scripts
-{
+{	
+	@{
+		<partial name="_ValidationScriptsPartial"/>
+	}
+
 	<script>
 
-
 		$(document).on('click', ".add-answer", function () {
-			var html = "<div class='row mt-2'>\
-							<div class='col-11'>\
-								<input type='text' class='form-control' placeholder='Add answer'/>\
+			var answerIndex = $(this).siblings().children('div').children('.answer-input').length;
+			var questionIndex = $(this).siblings().children('div').children('.answer-input').attr('id').charAt(10);
+
+			var html = '<div class="row mt-2">\
+							<div class="col-11">\
+								<input type="text" class="answer-input form-control" placeholder="Add answer" data-val="true" data-val-required="The Answer field is required."\
+								id="Questions_' + questionIndex + '__Answers_' + answerIndex + '__AnswersContent"\
+								name="Questions[' + questionIndex + '].Answers[' + answerIndex + '].AnswersContent" value="">\
+								<span class="text-danger field-validation-valid" data-valmsg-for="Questions[' + questionIndex + '].Answers[' + answerIndex + '].AnswersContent"\
+								data-valmsg-replace="true"></span>\
 							</div>\
-							<div class='col-1'>\
-								<button type='button' class='remove-answer btn btn-primary col-12'>-</button>\
+							<div class="col-1">\
+								<button type="button" class="remove-answer btn btn-primary col-12">-</button>\
 							</div>\
-						</div>"
+						</div>'
 			$(this).before(html);
+
+			$("form").removeData("validator");
+			$("form").removeData("unobtrusiveValidation");
+			$.validator.unobtrusive.parse("form");
 		});
+
 
 		$(document).on('click', ".remove-answer", function () {
+			var $answers = $(this).parent().parent().siblings().children('div').children('.answer-input')
+			var $spanAlerts = $(this).parent().parent().siblings().children('div').children('.text-danger')
+			var questionIndex = $(this).parent().parent().siblings().children('div').children('.answer-input').attr('id').charAt(10);
+
+			$answers.each(function(index) {
+				$(this).attr('id', 'Questions_' + questionIndex + '__Answers_' + index + '__AnswersContent')
+				$(this).attr('name', 'Questions[' + questionIndex + '].Answers[' + index + '].AnswersContent')
+			})
+
+			//console.log($spanAlerts.length)
+
+			//$spanAlerts.each(function(index) {
+			//	console.log($spanAlerts[index])
+				//$(this).attr('data-valmsg-for', 'Questions_' + questionIndex + '__Answers_' + index + '__AnswersContent')
+			//})
+	
 			$(this).parent().parent().remove();
+
+			$("form").removeData("validator");
+			$("form").removeData("unobtrusiveValidation");
+			$.validator.unobtrusive.parse("form");
 		});
 
+
 		$("#add-question").click(function () {
-			var html = "<div class='question container mt-3'>\
-							<div class='row' >\
-								<div class='col-12' >\
-									<input type='text' class='form-control form-control-lg' placeholder='Add question' />\
+			var questionIndex = $('.question-input').length;
+
+			var html = '<div class="question container mt-3">\
+							<div class="row" >\
+								<div class="col-12" >\
+									<input type="text" class="question-input form-control form-control-lg" placeholder="Add question" data-val="true"\
+									data-val-required="The Question field is required." id="Questions_' + questionIndex + '__QuestionContent"\
+									name="Questions[' + questionIndex + '].QuestionContent" value="" >\
+									<span class="text-danger field-validation-error" data-valmsg-for="Questions[' + questionIndex + '].QuestionContent" data-valmsg-replace="true"></span>\
 								</div>\
 							</div>\
-							<div class='row mt-3' >\
-								<div class='col-11' >\
-									<input type='text' class='form-control' placeholder='Add answer' />\
-								</div>\
-								<div class='col-1' >\
-									<button type='button' class='remove-answer btn btn-primary col-12' >-</button>\
-								</div>\
-							</div>\
-							<div class='row mt-2' >\
-								<div class='col-11' >\
-									<input type='text' class='form-control' placeholder='Add answer' />\
-								</div>\
-								<div class='col-1' >\
-									<button type='button' class='remove-answer btn btn-primary col-12' >-</button>\
+							<div class="row mt-3" >\
+								<div class="col-11" >\
+									<input type="text" class="answer-input form-control" placeholder="Add answer" data-val="true" data-val-required="The Answer field is required."\
+									id="Questions_' + questionIndex + '__Answers_0__AnswersContent" name="Questions[' + questionIndex + '].Answers[0].AnswersContent" value="">\
+									<span class="text-danger field-validation-valid" data-valmsg-for="Questions[' + questionIndex + '].Answers[0].AnswersContent" data-valmsg-replace="true"></span>\
 								</div>\
 							</div>\
-							<button type='button' class='add-answer btn btn-primary mt-2' >+</button>\
-						</div>"
+							<div class="row mt-2" >\
+								<div class="col-11" >\
+									<input type="text" class="answer-input form-control" placeholder="Add answer" data-val="true" data-val-required="The Answer field is required."\
+									id="Questions_' + questionIndex + '__Answers_1__AnswersContent" name="Questions[' + questionIndex + '].Answers[1].AnswersContent" value="">\
+									<span class="text-danger field-validation-valid" data-valmsg-for="Questions[' + questionIndex + '].Answers[1].AnswersContent" data-valmsg-replace="true"></span>\
+								</div>\
+							</div>\
+							<button type="button" class="add-answer btn btn-primary mt-2" >+</button>\
+						</div>'
 
 			$(".questions").append(html);
 
+			$("form").removeData("validator");
+			$("form").removeData("unobtrusiveValidation");
+			$.validator.unobtrusive.parse("form");
 		});
+
 	</script>
 }
