@@ -9,14 +9,14 @@
 	<div class="container mb-5">
 		<div class="row d-flex justify-content-between">
 			<div class="col-5">
-				<label class="col-form-label-lg" asp-for="QuizViewModel.QuizTitle"></label>
+				<label asp-for="QuizViewModel.QuizTitle" class="col-form-label-lg"></label>
 				<input asp-for="QuizViewModel.QuizTitle" type="text" class="form-control form-control-lg" placeholder="Quiz title" />
 				<span asp-validation-for="QuizViewModel.QuizTitle" class="text-danger"></span>
 			</div>
 			<div class="col-5">
-				<label class="col-form-label-lg" asp-for="QuizViewModel.QuizThreshold"></label>
-				<input asp-for="QuizViewModel.QuizThreshold" type="text" class="form-control form-control-lg" placeholder="Threshold [%]" />
-				<span asp-validation-for="QuizViewModel.QuizThreshold" class="text-danger"></span>
+				<label asp-for="QuizViewModel.QuizThreshold" class="col-form-label-lg"></label>
+				<input asp-for="QuizViewModel.QuizThreshold" type="range" class="form-range" min="0" max="100" step="5" oninput="updateInputValue(this.value)">
+				<output id="slider-value">50</output>
 			</div>
 		</div>
 	</div>
@@ -34,7 +34,7 @@
 					<span asp-validation-for="Questions[0].Answers[0].AnswersContent" class="answer-error text-danger"></span>
 				</div>
 				<div class="col-1">
-					<input asp-for='Questions[0].Answers[0].IsCorrect' type="checkbox" class="is-correct-input col-5" />
+					<input asp-for='Questions[0].Answers[0].IsCorrect' type="checkbox" title="Correct answer" class="is-correct-input col-5" />
 					<button type="button" class="remove-answer btn btn-primary col-5">-</button>
 				</div>
 			</div>
@@ -44,7 +44,7 @@
 					<span asp-validation-for="Questions[0].Answers[1].AnswersContent" class="answer-error text-danger"></span>
 				</div>
 				<div class="col-1">
-					<input asp-for='Questions[0].Answers[1].IsCorrect' type="checkbox" class="is-correct-input col-5" />
+					<input asp-for='Questions[0].Answers[1].IsCorrect' type="checkbox" title="Correct answer" class="is-correct-input col-5" />
 					<button type="button" class="remove-answer btn btn-primary col-5">-</button>
 				</div>
 			</div>
@@ -69,6 +69,10 @@
 
 	<script>
 
+		function updateInputValue(value) {
+			$('#slider-value').text(value)
+		}
+
 		$(document).on('click', ".add-answer", function () {
 			var answerIndex = $(this).siblings().children('div').children('.answer-input').length
 			var questionIndex = $(this).siblings().children('div').children('.question-input').attr('id').charAt(10)
@@ -88,7 +92,7 @@
 								data-valmsg-replace="true"></span>\
 							</div>\
 							<div class="col-1">\
-								<input type="checkbox" class="is-correct-input col-5" data-val="true" data-val-required="The Correct field is required."\
+								<input type="checkbox" title="Correct answer" class="is-correct-input col-5" data-val="true" data-val-required="The Correct field is required."\
 								id="Questions_' + questionIndex + '__Answers_' + answerIndex + '__IsCorrect"\
 								name="Questions[' + questionIndex + '].Answers[' + answerIndex + '].IsCorrect" value="true">\
 								<button type="button" class="remove-answer btn btn-primary col-5">-</button>\
@@ -185,7 +189,7 @@
 									<span class="answer-error text-danger field-validation-valid" data-valmsg-for="Questions[' + questionIndex + '].Answers[0].AnswersContent" data-valmsg-replace="true"></span>\
 								</div>\
 								<div class="col-1">\
-									<input type="checkbox" class="is-correct-input col-5" data-val="true" data-val-required="The Correct field is required."\
+									<input type="checkbox" title="Correct answer" class="is-correct-input col-5" data-val="true" data-val-required="The Correct field is required."\
 									id="Questions_' + questionIndex + '__Answers_0__IsCorrect"\
 									name="Questions[' + questionIndex + '].Answers[0].IsCorrect" value="true">\
 									<button type="button" class="remove-answer btn btn-primary col-5">-</button>\
@@ -198,7 +202,7 @@
 									<span class="answer-error text-danger field-validation-valid" data-valmsg-for="Questions[' + questionIndex + '].Answers[1].AnswersContent" data-valmsg-replace="true"></span>\
 								</div>\
 								<div class="col-1">\
-									<input type="checkbox" class="is-correct-input col-5" data-val="true" data-val-required="The Correct field is required."\
+									<input type="checkbox" title="Correct answer" class="is-correct-input col-5" data-val="true" data-val-required="The Correct field is required."\
 									id="Questions_' + questionIndex + '__Answers_1__IsCorrect"\
 									name="Questions[' + questionIndex + '].Answers[1].IsCorrect" value="true">\
 									<button type="button" class="remove-answer btn btn-primary col-5">-</button>\
