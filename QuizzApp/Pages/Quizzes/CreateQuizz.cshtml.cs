@@ -7,8 +7,11 @@ namespace QuizzApp.Pages.Quizzes
 {
     public class CreateQuizzModel : PageModel
     {
+        [BindProperty]
+        public QuizViewModel QuizViewModel { get; set; }
 		[BindProperty]
         public List<QuestionViewModel> Questions { get; set; }
+
 
         public void OnGet()
         {
@@ -18,7 +21,6 @@ namespace QuizzApp.Pages.Quizzes
         {   
             if(!ModelState.IsValid)
             {
-                return Page();
             }
 
             return Page();
