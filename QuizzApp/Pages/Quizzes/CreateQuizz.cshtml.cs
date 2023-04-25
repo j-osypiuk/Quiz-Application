@@ -7,8 +7,6 @@ namespace QuizzApp.Pages.Quizzes
 {
     public class CreateQuizzModel : PageModel
     {
-        public bool EnableClientValidation { get; set; } = true;
-
 		[BindProperty]
         public List<QuestionViewModel> Questions { get; set; }
 
@@ -18,6 +16,11 @@ namespace QuizzApp.Pages.Quizzes
 
         public IActionResult OnPost()
         {   
+            if(!ModelState.IsValid)
+            {
+                return Page();
+            }
+
             return Page();
         }
     }

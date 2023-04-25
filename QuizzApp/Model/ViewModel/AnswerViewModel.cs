@@ -9,6 +9,6 @@ namespace QuizzApp.Model.ViewModel
 		public string AnswersContent { get; set; }
 
 		[DisplayName("Correct")]
-		public int IsCorrect { get; set; }
+		public bool IsCorrect { get; set; }
 	}
 }
