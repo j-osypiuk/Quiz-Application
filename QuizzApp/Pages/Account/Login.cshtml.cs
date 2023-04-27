@@ -1,21 +1,54 @@
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using QuizzApp.Data;
 using QuizzApp.Model;
+using QuizzApp.Model.ViewModel;
+using System.Security.Claims;
 
 namespace QuizzApp.Pages.Account
 {
     public class LoginModel : PageModel
     {
         private readonly ApplicationDbContext _db;
-        public UserAccount UserAccount { get; set; }
-        public UserCredentials UserCredentials { get; set; }
+
+        [BindProperty]
+        public UserCredentialViewModel UserCredential { get; set; }
         public LoginModel(ApplicationDbContext db)
         {
             _db = db;
         }
         public void OnGet()
         {
+        }
+
+        public async Task<IActionResult> OnPostAsync() { 
+        
+            if (ModelState.IsValid)
+            {
+                var userCredential = _db.UserCredentials.SingleOrDefault(uc => uc.Username == UserCredential.Username && uc.Password == UserCredential.Password);
+                if (userCredential != null)
+                {
+                    var userAccount = _db.UsersAccounts.SingleOrDefault(ua => ua.Id ==  userCredential.Id);
+                    if (userAccount != null)
+                    {
+                        var claims = new List<Claim> {
+                            new Claim(ClaimTypes.Name, "user"),
+                            new Claim(ClaimTypes.Email, userAccount.Email)
+                        };
+                        var identity = new ClaimsIdentity(claims, "AuthCookie");
+                        ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(identity);
+
+                        await HttpContext.SignInAsync("AuthCookie", claimsPrincipal);
+
+                        return RedirectToAction("/Index");
+                    }
+
+                }
+            }
+
+            ModelState.AddModelError("", "Provided username or password are incorrect.");
+            return Page();
         }
     }
 }

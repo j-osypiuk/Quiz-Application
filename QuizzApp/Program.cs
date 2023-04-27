@@ -8,6 +8,11 @@ builder.Services.AddRazorPages();
 builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(
 		builder.Configuration.GetConnectionString("DefaultConnection")
 	));
+builder.Services.AddAuthentication("AuthCookie").AddCookie("AuthCookie", options =>
+{
+	options.Cookie.Name = "AuthCookie";
+});
+
 
 var app = builder.Build();
 
@@ -23,6 +28,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 
 app.UseRouting();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 
