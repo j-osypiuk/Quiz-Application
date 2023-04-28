@@ -12,169 +12,169 @@ namespace QuizzApp.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "UsersAccounts",
+                name: "UserAccount",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    Email = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    UserCredentialsId = table.Column<int>(type: "int", nullable: false)
+                    FirstName = table.Column<string>(type: "varchar(30)", nullable: false),
+                    LastName = table.Column<string>(type: "varchar(30)", nullable: false),
+                    Email = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UsersAccounts", x => x.Id);
+                    table.PrimaryKey("PK_UserAccount", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Tests",
+                name: "Quiz",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    QuizCode = table.Column<int>(type: "int", nullable: false),
+                    Title = table.Column<string>(type: "varchar(30)", nullable: false),
                     Threshold = table.Column<int>(type: "int", nullable: false),
                     UserId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Tests", x => x.Id);
+                    table.PrimaryKey("PK_Quiz", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Tests_UsersAccounts_UserId",
+                        name: "FK_Quiz_UserAccount_UserId",
                         column: x => x.UserId,
-                        principalTable: "UsersAccounts",
+                        principalTable: "UserAccount",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserCredentialsViewModel",
+                name: "UserCredential",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Username = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    Username = table.Column<string>(type: "varchar(30)", nullable: false),
                     Password = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     UserAccountId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserCredentials", x => x.Id);
+                    table.PrimaryKey("PK_UserCredential", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_UserCredentials_UsersAccounts_UserAccountId",
+                        name: "FK_UserCredential_UserAccount_UserAccountId",
                         column: x => x.UserAccountId,
-                        principalTable: "UsersAccounts",
+                        principalTable: "UserAccount",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "QuestionsViewModel",
+                name: "Question",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    QuestionContent = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    TestId = table.Column<int>(type: "int", nullable: false)
+                    QuestionContent = table.Column<string>(type: "varchar(250)", nullable: false),
+                    QuizId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Questions", x => x.Id);
+                    table.PrimaryKey("PK_Question", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Questions_Tests_TestId",
-                        column: x => x.TestId,
-                        principalTable: "Tests",
+                        name: "FK_Question_Quiz_QuizId",
+                        column: x => x.QuizId,
+                        principalTable: "Quiz",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Results",
+                name: "Result",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    FirstName = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    LastName = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    FirstName = table.Column<string>(type: "varchar(30)", nullable: false),
+                    LastName = table.Column<string>(type: "varchar(30)", nullable: false),
                     Score = table.Column<int>(type: "int", nullable: false),
-                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    TestId = table.Column<int>(type: "int", nullable: false)
+                    CreateDate = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "getdate()"),
+                    QuizId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Results", x => x.Id);
+                    table.PrimaryKey("PK_Result", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Results_Tests_TestId",
-                        column: x => x.TestId,
-                        principalTable: "Tests",
+                        name: "FK_Result_Quiz_QuizId",
+                        column: x => x.QuizId,
+                        principalTable: "Quiz",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Answers",
+                name: "Answer",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    AnswerContent = table.Column<string>(type: "nvarchar(max)", nullable: false),
+                    AnswerContent = table.Column<string>(type: "varchar(250)", nullable: false),
                     IsCorrect = table.Column<int>(type: "int", nullable: false),
                     QuestionId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Answers", x => x.Id);
+                    table.PrimaryKey("PK_Answer", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Answers_Questions_QuestionId",
+                        name: "FK_Answer_Question_QuestionId",
                         column: x => x.QuestionId,
-                        principalTable: "QuestionsViewModel",
+                        principalTable: "Question",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Answers_QuestionId",
-                table: "Answers",
+                name: "IX_Answer_QuestionId",
+                table: "Answer",
                 column: "QuestionId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Questions_QuestionContent",
-                table: "QuestionsViewModel",
+                name: "IX_Question_QuestionContent",
+                table: "Question",
                 column: "QuestionContent",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Questions_TestId",
-                table: "QuestionsViewModel",
-                column: "TestId");
+                name: "IX_Question_QuizId",
+                table: "Question",
+                column: "QuizId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Results_TestId",
-                table: "Results",
-                column: "TestId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Tests_UserId",
-                table: "Tests",
+                name: "IX_Quiz_UserId",
+                table: "Quiz",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserCredentials_UserAccountId",
-                table: "UserCredentialsViewModel",
+                name: "IX_Result_QuizId",
+                table: "Result",
+                column: "QuizId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserAccount_Email",
+                table: "UserAccount",
+                column: "Email",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_UserCredential_UserAccountId",
+                table: "UserCredential",
                 column: "UserAccountId",
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_UserCredentials_Username",
-                table: "UserCredentialsViewModel",
+                name: "IX_UserCredential_Username",
+                table: "UserCredential",
                 column: "Username",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
-                name: "IX_UsersAccounts_Email",
-                table: "UsersAccounts",
-                column: "Email",
                 unique: true);
         }
 
@@ -182,22 +182,22 @@ namespace QuizzApp.Migrations
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
-                name: "Answers");
+                name: "Answer");
 
             migrationBuilder.DropTable(
-                name: "Results");
+                name: "Result");
 
             migrationBuilder.DropTable(
-                name: "UserCredentialsViewModel");
+                name: "UserCredential");
 
             migrationBuilder.DropTable(
-                name: "QuestionsViewModel");
+                name: "Question");
 
             migrationBuilder.DropTable(
-                name: "Tests");
+                name: "Quiz");
 
             migrationBuilder.DropTable(
-                name: "UsersAccounts");
+                name: "UserAccount");
         }
     }
 }

@@ -28,11 +28,11 @@ namespace QuizzApp.Pages.Account
         {
             if (ModelState.IsValid)
             {
-                if (_db.UserCredentials.Any(uc => uc.Username == UserCredentialViewModel.Username))
+                if (_db.UserCredential.Any(uc => uc.Username == UserCredentialViewModel.Username))
                 {
                     ModelState.AddModelError("UserCredentialViewModel.Username", "Given user name already exists");
                 }
-                if (_db.UsersAccounts.Any(ua => ua.Email == UserAccountViewModel.Email))
+                if (_db.UserAccount.Any(ua => ua.Email == UserAccountViewModel.Email))
                 {
                     ModelState.AddModelError("UserAccountViewModel.Email", "Given email already exists");
                 }
@@ -41,7 +41,7 @@ namespace QuizzApp.Pages.Account
                     return Page();
                 }
 
-                var userCredential = new UserCredentials
+                var userCredential = new UserCredential
                 {
                     Password = UserCredentialViewModel.Password,
                     Username = UserCredentialViewModel.Username,
@@ -55,10 +55,10 @@ namespace QuizzApp.Pages.Account
                 };
 
                 userCredential.UserAccount = userAccount;
-                userAccount.UserCredentials = userCredential;
+                userAccount.UserCredential = userCredential;
 
-                _db.UsersAccounts.Add(userAccount);
-                _db.UserCredentials.Add(userCredential);
+                _db.UserAccount.Add(userAccount);
+                _db.UserCredential.Add(userCredential);
 
                 await _db.SaveChangesAsync();
                 return RedirectToPage("/Account/Login");

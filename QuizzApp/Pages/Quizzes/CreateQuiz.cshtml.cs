@@ -34,10 +34,11 @@ namespace QuizzApp.Pages.Quizzes
         {
             if (ModelState.IsValid)
             {
-                var userAccount = _db.UsersAccounts.SingleOrDefault(ua => ua.Id == int.Parse(HttpContext.User.FindFirstValue("UserId")));
+                var userAccount = _db.UserAccount.SingleOrDefault(ua => ua.Id == int.Parse(HttpContext.User.FindFirstValue("UserId")));
                 if (userAccount != null)
                 {
                     Quiz userQuiz = new();
+                    userQuiz.SetQuizCode(_db);
                     List<Question> userQuizQuestions = new List<Question>();
 
                     for(int i = 0; i < QuestionsViewModel.Count; i++)
@@ -46,7 +47,7 @@ namespace QuizzApp.Pages.Quizzes
                         userQuizQuestions.Add(new Question()
                         {
                             QuestionContent = QuestionsViewModel[0].QuestionContent,
-                            Test = userQuiz
+                            Quiz = userQuiz
                         });
 
                         foreach (var answerViewModel in QuestionsViewModel[0].Answers)
@@ -57,11 +58,11 @@ namespace QuizzApp.Pages.Quizzes
                                 IsCorrect = answerViewModel.IsCorrect ? 1 : 0,
                                 Question = userQuizQuestions[i]
                             });
-                            _db.Answers.Add(userQuizQuestionAnswers[userQuizQuestionAnswers.Count - 1]);
+                            _db.Answer.Add(userQuizQuestionAnswers[userQuizQuestionAnswers.Count - 1]);
                         }
 
                         userQuizQuestions[i].Answers = userQuizQuestionAnswers;
-                        _db.Questions.Add(userQuizQuestions[i]);
+                        _db.Question.Add(userQuizQuestions[i]);
                     }
 
                     userQuiz.Title = QuizViewModel.QuizTitle;
@@ -69,9 +70,9 @@ namespace QuizzApp.Pages.Quizzes
                     userQuiz.Questions = userQuizQuestions;
                     userQuiz.User = userAccount;
 
-                    userAccount.Test.Add(userQuiz);
+                    userAccount.Quizzes.Add(userQuiz);
 
-                    _db.Tests.Add(userQuiz);
+                    _db.Quiz.Add(userQuiz);
 
                     await _db.SaveChangesAsync();
 

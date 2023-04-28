@@ -29,10 +29,10 @@ namespace QuizzApp.Pages.Account
                 ModelState.AddModelError("", "Provided username or password are incorrect.");
             }
 
-            var userCredential = _db.UserCredentials.SingleOrDefault(uc => uc.Username == UserCredential.Username && uc.Password == UserCredential.Password);
+            var userCredential = _db.UserCredential.SingleOrDefault(uc => uc.Username == UserCredential.Username && uc.Password == UserCredential.Password);
             if (userCredential != null)
             {
-                var userAccount = _db.UsersAccounts.SingleOrDefault(ua => ua.Id == userCredential.Id);
+                var userAccount = _db.UserAccount.SingleOrDefault(ua => ua.Id == userCredential.Id);
                 if (userAccount != null)
                 {
                     var claims = new List<Claim> {

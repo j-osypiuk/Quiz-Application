@@ -1,6 +1,6 @@
 ﻿namespace QuizzApp.Model
 {
-    public class UserCredentials
+    public class UserCredential
     {
         public int Id { get; set; }
         public string Username { get; set; }
