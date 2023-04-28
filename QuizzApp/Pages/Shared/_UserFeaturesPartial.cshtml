@@ -1,0 +1,9 @@
+﻿@if (User.Identity.IsAuthenticated)
+{
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="" asp-page="/Quizzes/UserQuizzes">Your quizzes</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link text-dark" asp-area="" asp-page="/Quizzes/CreateQuiz">Create quiz</a>
+    </li>
+}

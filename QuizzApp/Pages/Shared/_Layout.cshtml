@@ -19,15 +19,7 @@
                 </button>
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Index">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Account/Login">Log in</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-page="/Quizzes/CreateQuizz">Create quizz</a>
-                        </li>
+                        <partial name="_UserFeaturesPartial" />
                     </ul>
                 </div>
                 <div class="mr-2">
@@ -44,7 +36,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2023 - QuizzApp - <a asp-area="" asp-page="/Privacy">Privacy</a>
+            &copy; Jakub Osypiuk 2023 - QuizzApp - <a asp-area="" asp-page="/Privacy">Privacy</a>
         </div>
     </footer>
 
