@@ -1,0 +1,10 @@
+﻿
+@if(User.Identity.IsAuthenticated) 
+{
+	<form method="post" class="form-inline" asp-page="/Account/Logout">
+		<button type="submit" class="ml-2 btn btn-primary">Logout</button>	
+	</form>
+} else
+{
+	<a asp-page="/Account/Login" role="button" class="btn btn-primary text-white text-decoration-none">Login</a>
+}
