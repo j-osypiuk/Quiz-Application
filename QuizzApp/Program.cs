@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using QuizzApp.Data;
+using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,6 +12,15 @@ builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlSer
 builder.Services.AddAuthentication("AuthCookie").AddCookie("AuthCookie", options =>
 {
 	options.Cookie.Name = "AuthCookie";
+	options.LoginPath = "/Account/Login";
+	options.AccessDeniedPath = "/Account/Login";
+});
+builder.Services.AddAuthorization(options =>
+{
+	options.AddPolicy("MustBeLoggedInUser", policy =>
+	{
+		policy.RequireClaim(ClaimTypes.Name, "UserLoggedIn");
+	});
 });
 
 

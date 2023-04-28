@@ -24,30 +24,31 @@ namespace QuizzApp.Pages.Account
 
         public async Task<IActionResult> OnPostAsync() { 
         
-            if (ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                var userCredential = _db.UserCredentials.SingleOrDefault(uc => uc.Username == UserCredential.Username && uc.Password == UserCredential.Password);
-                if (userCredential != null)
-                {
-                    var userAccount = _db.UsersAccounts.SingleOrDefault(ua => ua.Id ==  userCredential.Id);
-                    if (userAccount != null)
-                    {
-                        var claims = new List<Claim> {
-                            new Claim(ClaimTypes.Name, "user"),
-                            new Claim(ClaimTypes.Email, userAccount.Email)
-                        };
-                        var identity = new ClaimsIdentity(claims, "AuthCookie");
-                        ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(identity);
-
-                        await HttpContext.SignInAsync("AuthCookie", claimsPrincipal);
-
-                        return RedirectToAction("/Index");
-                    }
-
-                }
+                ModelState.AddModelError("", "Provided username or password are incorrect.");
             }
 
-            ModelState.AddModelError("", "Provided username or password are incorrect.");
+            var userCredential = _db.UserCredentials.SingleOrDefault(uc => uc.Username == UserCredential.Username && uc.Password == UserCredential.Password);
+            if (userCredential != null)
+            {
+                var userAccount = _db.UsersAccounts.SingleOrDefault(ua => ua.Id == userCredential.Id);
+                if (userAccount != null)
+                {
+                    var claims = new List<Claim> {
+                            new Claim("UserId", userAccount.Id.ToString()),
+                            new Claim(ClaimTypes.Name, "UserLoggedIn"),
+                            new Claim(ClaimTypes.Email, userAccount.Email),
+                        };
+                    var identity = new ClaimsIdentity(claims, "AuthCookie");
+                    ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(identity);
+
+                    await HttpContext.SignInAsync("AuthCookie", claimsPrincipal);
+
+                    return RedirectToPage("/Index");
+                }
+
+            }
             return Page();
         }
     }

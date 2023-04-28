@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using QuizzApp.Data;
@@ -8,6 +9,7 @@ using System.Formats.Asn1;
 
 namespace QuizzApp.Pages.Quizzes
 {
+    [Authorize (Policy = "MustBeLoggedInUser")]
     public class CreateQuizzModel : PageModel
     {
         private readonly ApplicationDbContext _db;
