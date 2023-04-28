@@ -70,7 +70,7 @@ namespace QuizzApp.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Questions",
+                name: "QuestionsViewModel",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -128,7 +128,7 @@ namespace QuizzApp.Migrations
                     table.ForeignKey(
                         name: "FK_Answers_Questions_QuestionId",
                         column: x => x.QuestionId,
-                        principalTable: "Questions",
+                        principalTable: "QuestionsViewModel",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -140,13 +140,13 @@ namespace QuizzApp.Migrations
 
             migrationBuilder.CreateIndex(
                 name: "IX_Questions_QuestionContent",
-                table: "Questions",
+                table: "QuestionsViewModel",
                 column: "QuestionContent",
                 unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Questions_TestId",
-                table: "Questions",
+                table: "QuestionsViewModel",
                 column: "TestId");
 
             migrationBuilder.CreateIndex(
@@ -191,7 +191,7 @@ namespace QuizzApp.Migrations
                 name: "UserCredentialsViewModel");
 
             migrationBuilder.DropTable(
-                name: "Questions");
+                name: "QuestionsViewModel");
 
             migrationBuilder.DropTable(
                 name: "Tests");

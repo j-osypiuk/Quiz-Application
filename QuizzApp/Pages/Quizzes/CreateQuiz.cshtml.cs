@@ -6,6 +6,7 @@ using QuizzApp.Model;
 using QuizzApp.Model.ViewModel;
 using System.ComponentModel.DataAnnotations;
 using System.Formats.Asn1;
+using System.Security.Claims;
 
 namespace QuizzApp.Pages.Quizzes
 {
@@ -18,53 +19,65 @@ namespace QuizzApp.Pages.Quizzes
         public QuizViewModel QuizViewModel { get; set; }
 
 		[BindProperty]
-        public List<QuestionViewModel> Questions { get; set; }
+        public List<QuestionViewModel> QuestionsViewModel { get; set; }
 
         public CreateQuizzModel(ApplicationDbContext db)
         {
             _db = db;
         }
+
         public void OnGet()
         {
         }
 
         public async Task<IActionResult> OnPost()
-        {   
-/*            if(ModelState.IsValid)
-            {   
-                List<Question> questions = new List<Question>();
+        {
+            if (ModelState.IsValid)
+            {
+                var userAccount = _db.UsersAccounts.SingleOrDefault(ua => ua.Id == int.Parse(HttpContext.User.FindFirstValue("UserId")));
+                if (userAccount != null)
+                {
+                    Quiz userQuiz = new();
+                    List<Question> userQuizQuestions = new List<Question>();
 
-                foreach(var question in Questions)
-                {   
-                    List<Answer> answers = new List<Answer>();
-                
-                    foreach(var answer in  question.Answers)
+                    for(int i = 0; i < QuestionsViewModel.Count; i++)
                     {
-                        answers.Add(new Answer()
+                        List<Answer> userQuizQuestionAnswers = new List<Answer>();
+                        userQuizQuestions.Add(new Question()
                         {
-                            AnswerContent = answer.AnswersContent,
-                            IsCorrect = answer.IsCorrect ? 1 : 0,
-                        }) ;
+                            QuestionContent = QuestionsViewModel[0].QuestionContent,
+                            Test = userQuiz
+                        });
+
+                        foreach (var answerViewModel in QuestionsViewModel[0].Answers)
+                        {
+                            userQuizQuestionAnswers.Add(new Answer()
+                            {
+                                AnswerContent = answerViewModel.AnswersContent,
+                                IsCorrect = answerViewModel.IsCorrect ? 1 : 0,
+                                Question = userQuizQuestions[i]
+                            });
+                            _db.Answers.Add(userQuizQuestionAnswers[userQuizQuestionAnswers.Count - 1]);
+                        }
+
+                        userQuizQuestions[i].Answers = userQuizQuestionAnswers;
+                        _db.Questions.Add(userQuizQuestions[i]);
                     }
-                    questions.Add(new Question()
-                    {
-                        QuestionContent = question.QuestionContent,
-                        Answers = answers
-                    }) ;
+
+                    userQuiz.Title = QuizViewModel.QuizTitle;
+                    userQuiz.Threshold = QuizViewModel.QuizThreshold;
+                    userQuiz.Questions = userQuizQuestions;
+                    userQuiz.User = userAccount;
+
+                    userAccount.Test.Add(userQuiz);
+
+                    _db.Tests.Add(userQuiz);
+
+                    await _db.SaveChangesAsync();
+
+                    return RedirectToPage("/Index");
                 }
-
-                Quiz newQuiz = new()
-                {   
-                    Title = QuizViewModel.QuizTitle,
-                    Threshold = QuizViewModel.QuizThreshold,
-                    Questions = questions,
-                };
-
-                _db.Tests.Add(newQuiz);
-                await _db.SaveChangesAsync();
-
-                return RedirectToPage("/Index");
-            }*/
+            }
 
             return Page();
         }
