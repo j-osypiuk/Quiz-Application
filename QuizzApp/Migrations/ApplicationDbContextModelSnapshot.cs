@@ -69,7 +69,7 @@ namespace QuizzApp.Migrations
 
                     b.HasIndex("TestId");
 
-                    b.ToTable("Questions");
+                    b.ToTable("QuestionsViewModel");
                 });
 
             modelBuilder.Entity("QuizzApp.Model.Result", b =>
@@ -201,7 +201,7 @@ namespace QuizzApp.Migrations
             modelBuilder.Entity("QuizzApp.Model.Question", b =>
                 {
                     b.HasOne("QuizzApp.Model.Test", "Test")
-                        .WithMany("Questions")
+                        .WithMany("QuestionsViewModel")
                         .HasForeignKey("TestId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -249,7 +249,7 @@ namespace QuizzApp.Migrations
 
             modelBuilder.Entity("QuizzApp.Model.Test", b =>
                 {
-                    b.Navigation("Questions");
+                    b.Navigation("QuestionsViewModel");
 
                     b.Navigation("Results");
                 });

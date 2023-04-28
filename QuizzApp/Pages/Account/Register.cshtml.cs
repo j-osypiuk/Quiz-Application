@@ -14,7 +14,7 @@ namespace QuizzApp.Pages.Account
         public UserAccountViewModel UserAccountViewModel { get; set; }
 
         [BindProperty]
-        public UserCredentialsViewModel UserCredentialViewModel { get; set; }
+        public NewUserCredentialViewModel UserCredentialViewModel { get; set; }
 
         public RegisterModel(ApplicationDbContext db)
         {

@@ -4,10 +4,9 @@ using System.ComponentModel.DataAnnotations;
 
 namespace QuizzApp.Model.ViewModel
 {
-    public class UserCredentialsViewModel
+    public class NewUserCredentialViewModel
     {
         [DisplayName("User Name")]
-        
         public string Username { get; set; }
 
         [Compare(nameof(ConfirmedPassword), ErrorMessage = "Entered password is inconsistent")]

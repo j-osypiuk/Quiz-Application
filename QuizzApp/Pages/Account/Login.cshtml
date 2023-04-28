@@ -7,12 +7,12 @@
     <div class="row justify-content-center ">
         <form method="post" class="col-3 p-3 rounded">
             <div class="text-danger" asp-validation-summary="ModelOnly"></div>
-            <label asp-for="UserCredentials.Username" class="form-label col-6">User Name</label>
-            <input asp-for="UserCredentials.Username" type="text" class="form-control col-3" placeholder="Your Login" />
-            <span asp-validation-for="UserCredentials.Username" class="text-danger"></span>
-            <label asp-for="UserCredentials.Password" class="form-label col-6 mt-3"></label>
-            <input asp-for="UserCredentials.Password" type="password" class="form-control col-6" id="password-input" placeholder="Your Password" />
-            <span asp-validation-for="UserCredentials.Password" class="text-danger"></span>
+            <label asp-for="UserCredential.Username" class="form-label col-6">User Name</label>
+            <input asp-for="UserCredential.Username" type="text" class="form-control col-3" placeholder="Your Login" />
+            <span asp-validation-for="UserCredential.Username" class="text-danger"></span>
+            <label asp-for="UserCredential.Password" class="form-label col-6 mt-3"></label>
+            <input asp-for="UserCredential.Password" type="password" class="form-control col-6" id="password-input" placeholder="Your Password" />
+            <span asp-validation-for="UserCredential.Password" class="text-danger"></span>
             <div class="col-12 text-center">
                 <button type="submit" class="btn btn-primary mt-4 ">Log in</button>
             </div>
