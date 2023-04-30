@@ -52,7 +52,6 @@ namespace QuizzApp.Data
 
             modelBuilder.Entity<Question>(etb =>
             {
-                etb.HasIndex(q => q.QuestionContent).IsUnique(true);
                 etb.Property(q => q.QuestionContent).IsRequired().HasColumnType("varchar(250)");
                 etb.HasMany(q => q.Answers).WithOne(a => a.Question).HasForeignKey(a => a.QuestionId);
             });
