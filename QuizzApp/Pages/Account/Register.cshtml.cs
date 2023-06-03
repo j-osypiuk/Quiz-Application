@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using QuizzApp.Data;
 using QuizzApp.Model;
-using QuizzApp.Model.ViewModel;
 
 namespace QuizzApp.Pages.Account
 {
@@ -11,10 +10,10 @@ namespace QuizzApp.Pages.Account
         private readonly ApplicationDbContext _db;
 
         [BindProperty]
-        public UserAccountViewModel UserAccountViewModel { get; set; }
+        public UserAccountVM UserAccountViewModel { get; set; }
 
         [BindProperty]
-        public NewUserCredentialViewModel UserCredentialViewModel { get; set; }
+        public NewUserCredentialVM UserCredentialViewModel { get; set; }
 
         public RegisterModel(ApplicationDbContext db)
         {
@@ -41,26 +40,15 @@ namespace QuizzApp.Pages.Account
                     return Page();
                 }
 
-                var userCredential = new UserCredential
-                {
-                    Password = UserCredentialViewModel.Password,
-                    Username = UserCredentialViewModel.Username,
-                };
+                UserAccount userAccount = new UserAccount();
 
-                var userAccount = new UserAccount
-                {
-                    FirstName = UserAccountViewModel.FirstName,
-                    LastName = UserAccountViewModel.LastName,
-                    Email = UserAccountViewModel.Email,
-                };
+                var newUserAccout = _db.Add(userAccount);
+				var newUserCredential = _db.Add(new UserCredential() { UserAccount = userAccount });
 
-                userCredential.UserAccount = userAccount;
-                userAccount.UserCredential = userCredential;
+				newUserAccout.CurrentValues.SetValues(UserAccountViewModel);
+				newUserCredential.CurrentValues.SetValues(UserCredentialViewModel);
 
-                _db.UserAccount.Add(userAccount);
-                _db.UserCredential.Add(userCredential);
-
-                await _db.SaveChangesAsync();
+				await _db.SaveChangesAsync();
                 return RedirectToPage("/Account/Login");
             }
             return Page();

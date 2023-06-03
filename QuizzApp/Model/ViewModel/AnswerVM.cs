@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace QuizzApp.Model.ViewModel
+namespace QuizzApp.Model
 {
-	public class AnswerViewModel
+	public class AnswerVM
 	{
 		[DisplayName("Answer")]
 		public string AnswersContent { get; set; }

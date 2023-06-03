@@ -2,8 +2,8 @@
 
 namespace QuizzApp.Model
 {
-	public class Quiz
-	{
+    public class Quiz
+    {
         public int Id { get; set; }
         public int QuizCode { get; set; }
         public string Title { get; set; }

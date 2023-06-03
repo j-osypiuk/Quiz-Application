@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel;
 
-namespace QuizzApp.Model.ViewModel
+namespace QuizzApp.Model
 {
-	public class QuizViewModel
+	public class QuizVM
 	{
 		[DisplayName("Quiz title")]
         public string QuizTitle { get; set; }

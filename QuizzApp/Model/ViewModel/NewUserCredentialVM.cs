@@ -2,9 +2,9 @@
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace QuizzApp.Model.ViewModel
+namespace QuizzApp.Model
 {
-    public class NewUserCredentialViewModel
+    public class NewUserCredentialVM
     {
         [DisplayName("User Name")]
         public string Username { get; set; }

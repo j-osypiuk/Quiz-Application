@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using QuizzApp.Data;
 using QuizzApp.Model;
-using QuizzApp.Model.ViewModel;
 using System.Security.Claims;
 
 namespace QuizzApp.Pages.Account
@@ -13,7 +12,7 @@ namespace QuizzApp.Pages.Account
         private readonly ApplicationDbContext _db;
 
         [BindProperty]
-        public UserCredentialViewModel UserCredential { get; set; }
+        public UserCredentialVM UserCredential { get; set; }
         public LoginModel(ApplicationDbContext db)
         {
             _db = db;

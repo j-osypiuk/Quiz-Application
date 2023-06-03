@@ -2,22 +2,21 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using QuizzApp.Data;
 using QuizzApp.Model;
-using QuizzApp.Model.ViewModel;
 using System.ComponentModel.DataAnnotations;
 using System.Formats.Asn1;
 using System.Security.Claims;
 
 namespace QuizzApp.Pages.Quizzes
 {
-	public class CreateQuizzModel : PageModel
+    public class CreateQuizzModel : PageModel
 	{
 		private readonly ApplicationDbContext _db;
 
 		[BindProperty]
-		public QuizViewModel QuizViewModel { get; set; }
+		public QuizVM QuizViewModel { get; set; }
 
 		[BindProperty]
-		public List<QuestionViewModel> Questions { get; set; }
+		public List<QuestionVM> Questions { get; set; }
 
 		public CreateQuizzModel(ApplicationDbContext db)
 		{

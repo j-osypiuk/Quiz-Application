@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel;
 
-namespace QuizzApp.Model.ViewModel
+namespace QuizzApp.Model
 {
-    public class UserCredentialViewModel
+    public class UserCredentialVM
     {
         [DisplayName("User Name")]
         public string Username { get; set; }
