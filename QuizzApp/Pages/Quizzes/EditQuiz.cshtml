@@ -2,7 +2,14 @@
 @model QuizzApp.Pages.Quizzes.EditQuizModel
 @{
 }
-<h2 class='header text-primary'>Edit Your quizz</h2>
+<div class="container">
+	<div class="row d-flex justify-content-between">
+		<h2 class='header text-primary col-5'>Edit Your quizz</h2>
+		<div class="col-2 text-end">
+			<a asp-page="/Quizzes/DeleteQuiz" asp-route-quizId="@Model.QuizId" class="btn btn-danger text-white text-decoration-none">Delete quizz</a>
+		</div>
+	</div>
+</div>
 <hr />
 <form method='post' class='p-3'>
 	<input asp-for="QuizId" type="hidden" value="@Model.QuizId" />

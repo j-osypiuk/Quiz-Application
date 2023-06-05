@@ -73,7 +73,7 @@ namespace QuizzApp.Pages.Quizzes
             }
 
 
-            return Page();
+            return RedirectToPage("/Quizzes/UserQuizzes");
         }
     }
 }
