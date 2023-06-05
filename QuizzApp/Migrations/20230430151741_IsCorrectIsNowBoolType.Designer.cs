@@ -198,7 +198,7 @@ namespace QuizzApp.Migrations
             modelBuilder.Entity("QuizzApp.Model.Answer", b =>
                 {
                     b.HasOne("QuizzApp.Model.Question", "Question")
-                        .WithMany("Answers")
+                        .WithMany("IsAnswerCorrect")
                         .HasForeignKey("QuestionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -252,7 +252,7 @@ namespace QuizzApp.Migrations
 
             modelBuilder.Entity("QuizzApp.Model.Question", b =>
                 {
-                    b.Navigation("Answers");
+                    b.Navigation("IsAnswerCorrect");
                 });
 
             modelBuilder.Entity("QuizzApp.Model.Quiz", b =>
