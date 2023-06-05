@@ -2,7 +2,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using QuizzApp.Data;
 using QuizzApp.Model;
-using System.Reflection.Metadata.Ecma335;
 using System.Security.Claims;
 
 namespace QuizzApp.Pages.Quizzes
@@ -14,9 +13,6 @@ namespace QuizzApp.Pages.Quizzes
         [BindProperty]
         public List<Quiz> UserQuizzes { get; set; }
 
-        [BindProperty]
-        public int SelectedQuizId { get; set; }
-
         public UserQuizzesModel(ApplicationDbContext db)
         {
             _db = db;
@@ -25,12 +21,6 @@ namespace QuizzApp.Pages.Quizzes
         public void OnGet()
         {
             UserQuizzes = _db.Quiz.Where(q => q.UserId == int.Parse(HttpContext.User.FindFirstValue("UserId"))).ToList();
-        }
-
-        public IActionResult OnPost() {
-
-            TempData["SelectedQuizId"] = SelectedQuizId;
-            return RedirectToPage("/Quizzes/EditQuiz");
         }
     }
 }

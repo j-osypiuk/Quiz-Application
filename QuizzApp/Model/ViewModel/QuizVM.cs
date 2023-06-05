@@ -5,9 +5,9 @@ namespace QuizzApp.Model
 	public class QuizVM
 	{
 		[DisplayName("Quiz title")]
-        public string QuizTitle { get; set; }
+        public string Title { get; set; }
 
 		[DisplayName("Quiz threshold [%]")]
-		public int QuizThreshold { get; set; }
+		public int Threshold { get; set; }
 	}
 }

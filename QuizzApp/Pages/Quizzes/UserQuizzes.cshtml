@@ -24,10 +24,7 @@
                     <a class="link-primary text-decoration-none">Results</a>
                 </td>
                 <td>
-                    <form method="post">
-                        <input asp-for="@Model.SelectedQuizId" type="hidden" value="@Model.UserQuizzes[i].Id" />
-                        <button  class="edit-quiz btn btn-primary text-white text-decoration-none">Edit</button>
-                    </form>
+                    <a asp-page="/Quizzes/EditQuiz" asp-route-quizId="@Model.UserQuizzes[i].Id" class="btn btn-primary text-white text-decoration-none">Edit</a>
                 </td>
             </tr>
         }

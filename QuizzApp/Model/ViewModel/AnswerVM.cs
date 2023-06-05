@@ -6,7 +6,7 @@ namespace QuizzApp.Model
 	public class AnswerVM
 	{
 		[DisplayName("Answer")]
-		public string AnswersContent { get; set; }
+		public string AnswerContent { get; set; }
 
 		[DisplayName("Correct")]
 		public bool IsCorrect { get; set; }

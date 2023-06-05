@@ -5,6 +5,7 @@
 <h2 class='header text-primary'>Edit Your quizz</h2>
 <hr />
 <form method='post' class='p-3'>
+	<input asp-for="QuizId" type="hidden" value="@Model.QuizId" />
 	<div class="container mb-5">
 		<div class="row d-flex justify-content-between">
 			<div class="col-5">
@@ -25,22 +26,22 @@
 			<div class='question container mb-4'>
 				<div class='row'>
 					<div class="col-11">
-						<input asp-for='@Model.Questions[i].QuestionContent' type='text' class='question-input form-control form-control-lg' value='@Model.Questions[i].QuestionContent' />
-						<span asp-validation-for='@Model.Questions[i].QuestionContent' class="question-error text-danger"></span>
+						<input asp-for='Questions[i].QuestionContent' type='text' class='question-input form-control form-control-lg' placeholder='Add question' />
+						<span asp-validation-for="Questions[i].QuestionContent" class="question-error text-danger"></span>
 					</div>
 					<div class="col-1">
 						<button type="button" class="remove-question btn btn-lg btn-primary col-11">-</button>
 					</div>
 				</div>
-				@foreach(var answer in Model.Questions[i].Answers)
+				@for (int j = 0; j < Model.Questions[i].Answers.Count; j++)
 				{
 					<div class='row mt-2 g-1'>
 						<div class='col-11'>
-							<input asp-for='@answer.AnswerContent' type='text' class='answer-input form-control' value='@answer.AnswerContent' />
-							<span asp-validation-for="@answer.AnswerContent" class="answer-error text-danger"></span>
+							<input asp-for='Questions[i].Answers[j].AnswerContent' type='text' class='answer-input form-control' placeholder='Add answer' />
+							<span asp-validation-for="Questions[i].Answers[j].AnswerContent" class="answer-error text-danger"></span>
 						</div>
 						<div class="col-1">
-							<input asp-for='@answer.IsCorrect' type="checkbox" title="Correct answer" class="is-correct-input col-5" value="@answer.IsCorrect" />
+							<input asp-for='Questions[i].Answers[j].IsCorrect' type="checkbox" title="Correct answer" class="is-correct-input col-5" />
 							<button type="button" class="remove-answer btn btn-primary col-5">-</button>
 						</div>
 					</div>
@@ -56,7 +57,7 @@
 	</div>
 
 	<div class='row justify-content-center'>
-		<button type='submit' class='create_quiz btn btn-lg btn-primary mt-3 col-2'>Create quiz</button>
+		<button type='submit' class='create_quiz btn btn-lg btn-primary mt-3 col-2'>Edit quiz</button>
 	</div>
 </form>
 

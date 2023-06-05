@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Microsoft.EntityFrameworkCore;
 using QuizzApp.Data;
 using QuizzApp.Model;
 
@@ -10,28 +11,69 @@ namespace QuizzApp.Pages.Quizzes
         private readonly ApplicationDbContext _db;
 
         [BindProperty]
-        public Quiz? Quiz { get; set; }
+        public int QuizId { get; set; }
 
-        [BindProperty]
-        public List<Question> Questions { get; set; }
+		[BindProperty]
+		public QuizVM Quiz { get; set; } = new QuizVM();
 
-        [BindProperty]
-        public List<Answer>[] Answers { get; set; }
+		[BindProperty]
+		public List<QuestionVM> Questions { get; set; } = new List<QuestionVM>();
 
-        public EditQuizModel(ApplicationDbContext db)
+		public EditQuizModel(ApplicationDbContext db)
         {
             _db = db;
         }
-        public void OnGet()
+        public async Task<IActionResult> OnGetAsync(int quizId)
         {
-            int quizId = Convert.ToInt32(TempData["SelectedQuizId"]);
-            Quiz = _db.Quiz.SingleOrDefault(q => q.Id == quizId);
-            Questions = _db.Question.Where(q => q.QuizId == Quiz.Id).ToList();
-            Answers = new List<Answer>[Questions.Count];
-            for(int i = 0; i < Questions.Count; i++) 
+            QuizId = quizId;
+            var userQuiz = await _db.Quiz.Include(q => q.Questions).ThenInclude(q => q.Answers).SingleOrDefaultAsync(q => q.Id == QuizId);
+
+            Quiz.Title = userQuiz.Title;
+            Quiz.Threshold = userQuiz.Threshold;
+
+            for(int i = 0; i < userQuiz.Questions.Count; i++) 
             {
-                Answers[i] = _db.Answer.Where(a => a.QuestionId == Questions[i].Id).ToList();
+                Questions.Add(new QuestionVM { QuestionContent = userQuiz.Questions[i].QuestionContent });
+                for(int j = 0; j < userQuiz.Questions[i].Answers.Count; j++)
+                {
+                    Questions[i].Answers.Add(new AnswerVM
+                    {
+                        AnswerContent = userQuiz.Questions[i].Answers[j].AnswerContent,
+                        IsCorrect = userQuiz.Questions[i].Answers[j].IsCorrect
+                    });
+                }
             }
+
+			return Page();
+		}
+
+        public async Task<IActionResult> OnPostAsync()
+        {
+            if (ModelState.IsValid)
+            {
+                var userQuiz = await _db.Quiz.Include(q => q.Questions).ThenInclude(q => q.Answers).SingleOrDefaultAsync(q => q.Id == QuizId);
+
+                userQuiz.Title = Quiz.Title;
+                userQuiz.Threshold = Quiz.Threshold;
+                List<Question> quizQuestions = new List<Question>();
+
+                foreach(var question in Questions)
+                {   
+                    List<Answer> questionAnswers = new List<Answer>();
+                    foreach(var answer in question.Answers) 
+                    {
+                        questionAnswers.Add(new Answer { AnswerContent = answer.AnswerContent, IsCorrect = answer.IsCorrect });
+                    }
+                    quizQuestions.Add(new Question { QuestionContent =  question.QuestionContent, Answers = questionAnswers });
+                }
+                userQuiz.Questions = quizQuestions;
+
+                _db.Update(userQuiz);
+                await _db.SaveChangesAsync();
+            }
+
+
+            return Page();
         }
     }
 }

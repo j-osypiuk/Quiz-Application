@@ -9,13 +9,13 @@
 	<div class="container mb-5">
 		<div class="row d-flex justify-content-between">
 			<div class="col-5">
-				<label asp-for="QuizViewModel.QuizTitle" class="col-form-label-lg"></label>
-				<input asp-for="QuizViewModel.QuizTitle" type="text" class="form-control form-control-lg" placeholder="Quiz title" />
-				<span asp-validation-for="QuizViewModel.QuizTitle" class="text-danger"></span>
+				<label asp-for="QuizViewModel.Title" class="col-form-label-lg"></label>
+				<input asp-for="QuizViewModel.Title" type="text" class="form-control form-control-lg" placeholder="Quiz title" />
+				<span asp-validation-for="QuizViewModel.Title" class="text-danger"></span>
 			</div>
 			<div class="col-5">
-				<label asp-for="QuizViewModel.QuizThreshold" class="col-form-label-lg"></label>
-				<input asp-for="QuizViewModel.QuizThreshold" type="range" class="form-range" min="0" max="100" step="5" oninput="updateInputValue(this.value)">
+				<label asp-for="QuizViewModel.Threshold" class="col-form-label-lg"></label>
+				<input asp-for="QuizViewModel.Threshold" type="range" class="form-range" min="0" max="100" step="5" oninput="updateInputValue(this.value)">
 				<output id="slider-value">50</output>
 			</div>
 		</div>
@@ -30,8 +30,8 @@
 			</div>
 			<div class='row mt-3 g-1'>
 				<div class='col-11'>
-					<input asp-for='Questions[0].Answers[0].AnswersContent' type='text' class='answer-input form-control' placeholder='Add answer' />
-					<span asp-validation-for="Questions[0].Answers[0].AnswersContent" class="answer-error text-danger"></span>
+					<input asp-for='Questions[0].Answers[0].AnswerContent' type='text' class='answer-input form-control' placeholder='Add answer' />
+					<span asp-validation-for="Questions[0].Answers[0].AnswerContent" class="answer-error text-danger"></span>
 				</div>
 				<div class="col-1">
 					<input asp-for='Questions[0].Answers[0].IsCorrect' type="checkbox" title="Correct answer" class="is-correct-input col-5" />
@@ -40,8 +40,8 @@
 			</div>
 			<div class='row mt-2 g-1'>
 				<div class='col-11'>
-					<input asp-for='Questions[0].Answers[1].AnswersContent' type='text' class='answer-input form-control' placeholder='Add answer' />
-					<span asp-validation-for="Questions[0].Answers[1].AnswersContent" class="answer-error text-danger"></span>
+					<input asp-for='Questions[0].Answers[1].AnswerContent' type='text' class='answer-input form-control' placeholder='Add answer' />
+					<span asp-validation-for="Questions[0].Answers[1].AnswerContent" class="answer-error text-danger"></span>
 				</div>
 				<div class="col-1">
 					<input asp-for='Questions[0].Answers[1].IsCorrect' type="checkbox" title="Correct answer" class="is-correct-input col-5" />

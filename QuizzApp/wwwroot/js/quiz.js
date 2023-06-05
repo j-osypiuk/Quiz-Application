@@ -16,9 +16,9 @@
 			var html = '<div class="row mt-2 g-1">\
 									<div class="col-11">\
 										<input type="text" class="answer-input form-control" placeholder="Add answer" data-val="true" data-val-required="The Answer field is required."\
-										id="Questions_' + questionIndex + '__Answers_' + answerIndex + '__AnswersContent"\
-										name="Questions[' + questionIndex + '].Answers[' + answerIndex + '].AnswersContent" value="">\
-										<span class="answer-error text-danger field-validation-valid" data-valmsg-for="Questions[' + questionIndex + '].Answers[' + answerIndex + '].AnswersContent"\
+										id="Questions_' + questionIndex + '__Answers_' + answerIndex + '__AnswerContent"\
+										name="Questions[' + questionIndex + '].Answers[' + answerIndex + '].AnswerContent" value="">\
+										<span class="answer-error text-danger field-validation-valid" data-valmsg-for="Questions[' + questionIndex + '].Answers[' + answerIndex + '].AnswerContent"\
 										data-valmsg-replace="true"></span>\
 									</div>\
 									<div class="col-1">\
@@ -43,12 +43,12 @@
 		var questionIndex = $(this).parent().parent().siblings().children('div').children('.question-input').attr('id').charAt(10);
 
 		$answers.each(function (index) {
-			$(this).attr('id', 'Questions_' + questionIndex + '__Answers_' + index + '__AnswersContent')
-			$(this).attr('name', 'Questions[' + questionIndex + '].Answers[' + index + '].AnswersContent')
+			$(this).attr('id', 'Questions_' + questionIndex + '__Answers_' + index + '__AnswerContent')
+			$(this).attr('name', 'Questions[' + questionIndex + '].Answers[' + index + '].AnswerContent')
 		})
 
 		$spanAlerts.each(function (index) {
-			$(this).attr('data-valmsg-for', 'Questions[' + questionIndex + '].Answers[' + index + '].AnswersContent')
+			$(this).attr('data-valmsg-for', 'Questions[' + questionIndex + '].Answers[' + index + '].AnswerContent')
 		})
 
 		$questionCheckboxes.each(function (index) {
@@ -79,12 +79,12 @@
 			var $isAnswerCorrect = $(this).parent().parent().siblings().children('div').children('.is-correct-input')
 
 			$questionAnswers.each(function (jndex) {
-				$(this).attr('id', 'Questions_' + index + '__Answers_' + jndex + '__AnswersContent')
-				$(this).attr('name', 'Questions[' + index + '].Answers[' + jndex + '].AnswersContent')
+				$(this).attr('id', 'Questions_' + index + '__Answers_' + jndex + '__AnswerContent')
+				$(this).attr('name', 'Questions[' + index + '].Answers[' + jndex + '].AnswerContent')
 			})
 
 			$questionAnswersErrors.each(function (jndex) {
-				$(this).attr('data-valmsg-for', 'Questions[' + index + '].Answers[' + jndex + '].AnswersContent')
+				$(this).attr('data-valmsg-for', 'Questions[' + index + '].Answers[' + jndex + '].AnswerContent')
 			})
 
 			$isAnswerCorrect.each(function (jndex) {
@@ -121,8 +121,8 @@
 										<div class="row mt-3 g-1" >\
 											<div class="col-11" >\
 												<input type="text" class="answer-input form-control" placeholder="Add answer" data-val="true" data-val-required="The Answer field is required."\
-												id="Questions_' + questionIndex + '__Answers_0__AnswersContent" name="Questions[' + questionIndex + '].Answers[0].AnswersContent" value="">\
-												<span class="answer-error text-danger field-validation-valid" data-valmsg-for="Questions[' + questionIndex + '].Answers[0].AnswersContent" data-valmsg-replace="true"></span>\
+												id="Questions_' + questionIndex + '__Answers_0__AnswerContent" name="Questions[' + questionIndex + '].Answers[0].AnswerContent" value="">\
+												<span class="answer-error text-danger field-validation-valid" data-valmsg-for="Questions[' + questionIndex + '].Answers[0].AnswerContent" data-valmsg-replace="true"></span>\
 											</div>\
 											<div class="col-1">\
 												<input type="checkbox" title="Correct answer" class="is-correct-input col-5" data-val="true" data-val-required="The Correct field is required."\
@@ -134,8 +134,8 @@
 										<div class="row mt-2 g-1" >\
 											<div class="col-11" >\
 												<input type="text" class="answer-input form-control" placeholder="Add answer" data-val="true" data-val-required="The Answer field is required."\
-												id="Questions_' + questionIndex + '__Answers_1__AnswersContent" name="Questions[' + questionIndex + '].Answers[1].AnswersContent" value="">\
-												<span class="answer-error text-danger field-validation-valid" data-valmsg-for="Questions[' + questionIndex + '].Answers[1].AnswersContent" data-valmsg-replace="true"></span>\
+												id="Questions_' + questionIndex + '__Answers_1__AnswerContent" name="Questions[' + questionIndex + '].Answers[1].AnswerContent" value="">\
+												<span class="answer-error text-danger field-validation-valid" data-valmsg-for="Questions[' + questionIndex + '].Answers[1].AnswerContent" data-valmsg-replace="true"></span>\
 											</div>\
 											<div class="col-1">\
 												<input type="checkbox" title="Correct answer" class="is-correct-input col-5" data-val="true" data-val-required="The Correct field is required."\

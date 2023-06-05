@@ -50,7 +50,7 @@ namespace QuizzApp.Pages.Quizzes
 						{
 							userQuizQuestionAnswers.Add(new Answer()
 							{
-								AnswerContent = Questions[i].Answers[j].AnswersContent,
+								AnswerContent = Questions[i].Answers[j].AnswerContent,
 								IsCorrect = Questions[i].Answers[j].IsCorrect,
 								Question = userQuizQuestions[i]
 							});
@@ -61,8 +61,8 @@ namespace QuizzApp.Pages.Quizzes
 						_db.Question.Add(userQuizQuestions[i]);
 					}
 
-					userQuiz.Title = QuizViewModel.QuizTitle;
-					userQuiz.Threshold = QuizViewModel.QuizThreshold;
+					userQuiz.Title = QuizViewModel.Title;
+					userQuiz.Threshold = QuizViewModel.Threshold;
 					userQuiz.Questions = userQuizQuestions;
 					userQuiz.User = userAccount;
 
