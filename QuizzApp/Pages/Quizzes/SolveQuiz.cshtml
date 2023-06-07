@@ -7,7 +7,9 @@
 <hr />
 
 <form method='post' class='p-3'>
-	<input asp-for="Quiz.Id" type="hidden" value="@Model.QuizId" />
+	<input asp-for="Quiz.Id" type="hidden" value="@Model.Quiz.Id" />
+	<input asp-for="FirstName" type="hidden" value="@Model.FirstName" />
+	<input asp-for="LastName" type="hidden" value="@Model.LastName" />
 	<div class='questions mb-2 mt-4'>
 		@{int k = 0;
 		@foreach(var question in Model.Quiz.Questions)
