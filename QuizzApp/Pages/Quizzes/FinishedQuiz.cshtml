@@ -1,0 +1,14 @@
+﻿@page
+@model QuizzApp.Pages.Quizzes.FinishedQuizModel
+@{
+}
+
+<div class="container">
+	<div class="row d-flex align-items-center">
+		<h1 class="col-5">Thank you for solving quiz</h1><span class="d-block col-7" style="font-size:120px; padding-bottom:25px">:)</span>
+		<h3>You achieved a score of <strong><u>@Model.Score%</u></strong> correct answers.</h3>
+		<h4 class="mt-3">Congratulations!</h4>
+		<p class="mt-4">Click <a class="link-primary text-decoration-none" asp-page="/Index">here</a> to solve next quiz or <a class="link-primary text-decoration-none" asp-page="/Account/Login">login</a> to create your own quizzes.</p>
+	</div>
+
+</div>

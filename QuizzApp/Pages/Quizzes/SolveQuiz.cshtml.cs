@@ -66,7 +66,7 @@ namespace QuizzApp.Pages.Quizzes
 
 			await _db.SaveChangesAsync();
 
-            return RedirectToPage("/Index");
+            return RedirectToPage("/Quizzes/FinishedQuiz", new { score = (int)Math.Round(score) });
         }
     }
 }
