@@ -21,34 +21,36 @@ namespace QuizzApp.Pages.Account
         {
         }
 
-        public async Task<IActionResult> OnPostAsync() { 
-        
-            if (!ModelState.IsValid)
-            {
-                ModelState.AddModelError("", "Provided username or password are incorrect.");
-            }
+        public async Task<IActionResult> OnPostAsync() {
 
-            var userCredential = _db.UserCredential.SingleOrDefault(uc => uc.Username == UserCredential.Username && uc.Password == UserCredential.Password);
-            if (userCredential != null)
+            if (ModelState.IsValid)
             {
-                var userAccount = _db.UserAccount.SingleOrDefault(ua => ua.Id == userCredential.Id);
-                if (userAccount != null)
+
+                var userCredential = _db.UserCredential.SingleOrDefault(uc => uc.Username == UserCredential.Username && uc.Password == UserCredential.Password);
+                if (userCredential != null)
                 {
-                    var claims = new List<Claim> {
+                    var userAccount = _db.UserAccount.SingleOrDefault(ua => ua.Id == userCredential.Id);
+                    if (userAccount != null)
+                    {
+                        var claims = new List<Claim> {
                             new Claim("UserId", userAccount.Id.ToString()),
                             new Claim(ClaimTypes.Name, "UserLoggedIn"),
                             new Claim(ClaimTypes.Email, userAccount.Email),
                         };
-                    var identity = new ClaimsIdentity(claims, "AuthCookie");
-                    ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(identity);
+                        var identity = new ClaimsIdentity(claims, "AuthCookie");
+                        ClaimsPrincipal claimsPrincipal = new ClaimsPrincipal(identity);
 
-                    await HttpContext.SignInAsync("AuthCookie", claimsPrincipal);
+                        await HttpContext.SignInAsync("AuthCookie", claimsPrincipal);
 
-                    return RedirectToPage("/Index");
-                }
+                        return RedirectToPage("/Account/LoggedInDefault", new { userAccount.FirstName });
+                    }
 
-            }
-            return Page();
+                } else
+                {
+					ModelState.AddModelError("", "Provided username or password are incorrect.");
+				}
+            } 
+		    return Page();
         }
     }
 }
