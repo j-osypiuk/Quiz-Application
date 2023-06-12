@@ -1,0 +1,41 @@
+﻿@page
+@model QuizzApp.Pages.Account.LoggedInDefaultModel
+@{
+}
+
+<h2 class='header text-primary col-5'>Weclome @Model.FirstName!</h2>
+<hr />
+
+<div class="container mt-5 p-5">
+	<div class="row gap-4 justify-content-center">
+		<div class="col-3 border border-2 border-primary rounded rounded-3 p-4 text-center">
+			<h3 class="text-primary">Edit quiz</h3>
+			<div class="p-2">
+				<p>Create new quiz and share it with other people.</p>
+			</div>
+			<a asp-page="/Quizzes/CreateQuiz" class="btn btn-primary text-white text-decoration-none">Create quiz!</a>
+		</div>
+
+		<div class="col-3 border border-2 border-primary rounded rounded-3 p-4 text-center">
+			<h3 class="text-primary">Solve quiz</h3>
+			<div class="p-2">
+				<p>Solve quzzes created by other users.</p>
+			</div>
+			<form method="post">
+				<input asp-for="@Model.FirstName" value="@Model.FirstName" type="hidden" />
+				<input asp-for="@Model.LastName" value="@Model.LastName" type="hidden" />
+				<input asp-for="@Model.QuizCode" type="text" class="form-control" placeholder="Quiz code" />
+				<span asp-validation-for="QuizCode" class="text-danger d-block"></span>
+				<button type="submit" class="btn btn-primary mt-3">Solve quiz!</button>
+			</form>
+		</div>
+
+		<div class="col-3 border border-2 border-primary rounded rounded-3 p-4 text-center">
+			<h3 class="text-primary">Edit quiz</h3>
+			<div class="p-2">
+				<p>Manage your quizzes: edit, delete or check participants results.</p>
+			</div>
+			<a asp-page="/Quizzes/UserQuizzes" class="btn btn-primary text-white text-decoration-none">Edit quiz!</a>
+		</div>
+	</div>
+</div>

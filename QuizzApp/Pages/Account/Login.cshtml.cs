@@ -42,7 +42,7 @@ namespace QuizzApp.Pages.Account
 
                         await HttpContext.SignInAsync("AuthCookie", claimsPrincipal);
 
-                        return RedirectToPage("/Account/LoggedInDefault", new { userAccount.FirstName });
+                        return RedirectToPage("/Account/LoggedInDefault", new { userAccount.FirstName, userAccount.LastName });
                     }
 
                 } else
