@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using QuizzApp.Data;
+using System.Security.Claims;
 
 namespace QuizzApp.Pages.Account
 {
@@ -23,10 +24,15 @@ namespace QuizzApp.Pages.Account
 			_db = db;
 		}
 
-		public void OnGet(string? firstName, string? lastName)
+		public async Task<IActionResult> OnGetAsync()
         {
-            FirstName = firstName;
-            LastName = lastName;
+			var user = await _db.UserAccount.SingleOrDefaultAsync(ua => ua.Id == int.Parse(HttpContext.User.FindFirstValue("UserId")));
+			if (user != null) 
+			{
+				FirstName = user.FirstName;
+				LastName = user.LastName;
+			}
+			return Page();
         }
 
 		public async Task<IActionResult> OnPostAsync()
