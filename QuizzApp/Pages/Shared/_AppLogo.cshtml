@@ -1,0 +1,8 @@
+﻿@if (User.Identity.IsAuthenticated)
+{
+	<a class="navbar-brand" asp-area="" asp-page="/Account/LoggedInDefault">QuizzApp</a>
+}
+else
+{
+	<a class="navbar-brand" asp-area="" asp-page="/Index">QuizzApp</a>
+}
