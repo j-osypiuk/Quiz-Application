@@ -3,49 +3,45 @@
 @{
 }
 
-<div class="content mt-3 p-5">
-    <div class="row justify-content-center ">
-        <form method="post" class="col-lg-5 col-sm-9 p-3 ">
-            <div class="text-danger" asp-validation-summary="ModelOnly"></div>
-            <div class="row">
-                <div class="col-6">
-                    <label asp-for="UserCredentialViewModel.Username" class="form-label mt-3"></label>
-                    <input asp-for="UserCredentialViewModel.Username" type="text" class="form-control" placeholder="Your Login" />
-                    <span asp-validation-for="UserCredentialViewModel.Username" class="text-danger"></span>
-                </div>
-                <div class="col-6">
-                    <label asp-for="UserAccountViewModel.Email" class="form-label mt-3"></label>
-                    <input asp-for="UserAccountViewModel.Email" type="email" class="form-control" placeholder="Your Email" />
-                    <span asp-validation-for="UserAccountViewModel.Email" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-6">
-                    <label asp-for="UserAccountViewModel.FirstName" class="form-label mt-3"></label>
-                    <input asp-for="UserAccountViewModel.FirstName" type="text" class="form-control" placeholder="First Name" />
-                    <span asp-validation-for="UserAccountViewModel.FirstName" class="text-danger"></span>
-                </div>
-                <div class="col-6">
-                    <label asp-for="UserAccountViewModel.LastName" class="form-label mt-3"></label>
-                    <input asp-for="UserAccountViewModel.LastName" type="text" class="form-control" placeholder="Last Name" />
-                    <span asp-validation-for="UserAccountViewModel.LastName" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-6">
-                    <label asp-for="UserCredentialViewModel.Password" class="form-label mt-3"></label>
-                    <input asp-for="UserCredentialViewModel.Password" type="password" class="form-control" placeholder="Your Password" />
-                    <span asp-validation-for="UserCredentialViewModel.Password" class="text-danger"></span>
-                </div>
-                <div class="col-6">
-                    <label asp-for="UserCredentialViewModel.ConfirmedPassword" class="form-label mt-3">Confirm Password</label>
-                    <input asp-for="UserCredentialViewModel.ConfirmedPassword" type="password" class="form-control" placeholder="Your Password" />
-                    <span asp-validation-for="UserCredentialViewModel.ConfirmedPassword" class="text-danger"></span>
-                </div>
-            </div>
-            <div class="col-12 text-center">
-                <button type="submit" class="btn btn-primary mt-4 ">Create account</button>
-            </div>
-        </form>
+<form method="post" class="container mt-3 p-5 ">
+    <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+    <div class="row justify-content-center">
+        <div class="col-3">
+            <label asp-for="UserCredentialViewModel.Username" class="form-label mt-3"></label>
+            <input asp-for="UserCredentialViewModel.Username" type="text" class="form-control" placeholder="Your Login" />
+            <span asp-validation-for="UserCredentialViewModel.Username" class="text-danger"></span>
+        </div>
+        <div class="col-3">
+            <label asp-for="UserAccountViewModel.Email" class="form-label mt-3"></label>
+            <input asp-for="UserAccountViewModel.Email" type="email" class="form-control" placeholder="Your Email" />
+            <span asp-validation-for="UserAccountViewModel.Email" class="text-danger"></span>
+        </div>
     </div>
-</div>
+    <div class="row justify-content-center">
+        <div class="col-3">
+            <label asp-for="UserAccountViewModel.FirstName" class="form-label mt-3"></label>
+            <input asp-for="UserAccountViewModel.FirstName" type="text" class="form-control" placeholder="First Name" />
+            <span asp-validation-for="UserAccountViewModel.FirstName" class="text-danger"></span>
+        </div>
+        <div class="col-3">
+            <label asp-for="UserAccountViewModel.LastName" class="form-label mt-3"></label>
+            <input asp-for="UserAccountViewModel.LastName" type="text" class="form-control" placeholder="Last Name" />
+            <span asp-validation-for="UserAccountViewModel.LastName" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="row justify-content-center">
+        <div class="col-3">
+            <label asp-for="UserCredentialViewModel.Password" class="form-label mt-3"></label>
+            <input asp-for="UserCredentialViewModel.Password" type="password" class="form-control" placeholder="Your Password" />
+            <span asp-validation-for="UserCredentialViewModel.Password" class="text-danger"></span>
+        </div>
+        <div class="col-3">
+            <label asp-for="UserCredentialViewModel.ConfirmedPassword" class="form-label mt-3">Confirm Password</label>
+            <input asp-for="UserCredentialViewModel.ConfirmedPassword" type="password" class="form-control" placeholder="Your Password" />
+            <span asp-validation-for="UserCredentialViewModel.ConfirmedPassword" class="text-danger"></span>
+        </div>
+    </div>
+    <div class="text-center">
+        <button type="submit" class="btn btn-primary mt-4 ">Create account</button>
+    </div>
+</form>
