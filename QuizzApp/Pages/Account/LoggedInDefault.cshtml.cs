@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -6,6 +7,7 @@ using System.Security.Claims;
 
 namespace QuizzApp.Pages.Account
 {
+    [Authorize]	
     public class LoggedInDefaultModel : PageModel
     {
 		private readonly ApplicationDbContext _db;

@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using QuizzApp.Data;
@@ -6,6 +7,7 @@ using System.Security.Claims;
 
 namespace QuizzApp.Pages.Quizzes
 {
+	[Authorize]
 	public class CreateQuizzModel : PageModel
 	{
 		private readonly ApplicationDbContext _db;
@@ -24,7 +26,7 @@ namespace QuizzApp.Pages.Quizzes
 		{
 		}
 
-		public async Task<IActionResult> OnPost()
+		public async Task<IActionResult> OnPostAsync()
 		{
 			if (ModelState.IsValid)
 			{

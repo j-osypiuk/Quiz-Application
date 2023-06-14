@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using QuizzApp.Data;
@@ -6,6 +7,7 @@ using System.Security.Claims;
 
 namespace QuizzApp.Pages.Quizzes
 {
+    [Authorize]
     public class UserQuizzesModel : PageModel
     {
         public ApplicationDbContext _db { get; set; }

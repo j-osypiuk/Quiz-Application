@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
@@ -6,6 +7,7 @@ using QuizzApp.Model;
 
 namespace QuizzApp.Pages.Quizzes
 {
+    [Authorize]
     public class EditQuizModel : PageModel
     {
         private readonly ApplicationDbContext _db;
