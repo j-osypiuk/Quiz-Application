@@ -51,31 +51,35 @@ namespace QuizzApp.Pages.Quizzes
 
         public async Task<IActionResult> OnPostAsync()
         {
-            if (ModelState.IsValid)
-            {
-                var userQuiz = await _db.Quiz.Include(q => q.Questions).ThenInclude(q => q.Answers).SingleOrDefaultAsync(q => q.Id == QuizId);
 
-                userQuiz.Title = Quiz.Title;
-                userQuiz.Threshold = Quiz.Threshold;
-                List<Question> quizQuestions = new List<Question>();
+			var userQuiz = await _db.Quiz.Include(q => q.Questions).ThenInclude(q => q.Answers).SingleOrDefaultAsync(q => q.Id == QuizId);
 
-                foreach(var question in Questions)
-                {   
-                    List<Answer> questionAnswers = new List<Answer>();
-                    foreach(var answer in question.Answers) 
-                    {
-                        questionAnswers.Add(new Answer { AnswerContent = answer.AnswerContent, IsCorrect = answer.IsCorrect });
-                    }
-                    quizQuestions.Add(new Question { QuestionContent =  question.QuestionContent, Answers = questionAnswers });
-                }
-                userQuiz.Questions = quizQuestions;
+			userQuiz.Title = Quiz.Title;
+			userQuiz.Threshold = Quiz.Threshold;
+			List<Question> quizQuestions = new List<Question>();
 
-                _db.Update(userQuiz);
-                await _db.SaveChangesAsync();
-            }
+			foreach (var question in Questions)
+			{
+				List<Answer> questionAnswers = new List<Answer>();
+				foreach (var answer in question.Answers)
+				{
+					if (answer.AnswerContent != null)
+					{
+						questionAnswers.Add(new Answer { AnswerContent = answer.AnswerContent, IsCorrect = answer.IsCorrect });
+					}
+				}
+				if (question.QuestionContent != null)
+				{
+					quizQuestions.Add(new Question { QuestionContent = question.QuestionContent, Answers = questionAnswers });
+				}
+			}
+			userQuiz.Questions = quizQuestions;
+
+			_db.Update(userQuiz);
+			await _db.SaveChangesAsync();
 
 
-            return RedirectToPage("/Quizzes/UserQuizzes");
+			return RedirectToPage("/Quizzes/UserQuizzes");
         }
     }
 }

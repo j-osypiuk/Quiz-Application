@@ -7,20 +7,23 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/QuizzApp.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <partial name="_AppLogo" />
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
-                        <partial name="_UserFeaturesPartial" />
-                    </ul>
+                <div class="d-flex">
+                    <partial name="_AppLogo" />
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                        <ul class="navbar-nav flex-grow-1">
+                            <partial name="_UserFeaturesPartial" />
+                        </ul>
+                    </div>
                 </div>
                 <div class="mr-2">
                     <partial name="_LoginStatusPartial" />
@@ -36,7 +39,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; Jakub Osypiuk 2023 - QuizzApp - <a asp-area="" asp-page="/Privacy">Privacy</a>
+            - QuizzApp 2023 -
         </div>
     </footer>
 

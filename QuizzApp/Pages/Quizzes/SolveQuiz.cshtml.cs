@@ -11,6 +11,9 @@ namespace QuizzApp.Pages.Quizzes
         private readonly ApplicationDbContext _db;
 
 		[BindProperty]
+		public List<char> letters { get; set; } = new List<char> { 'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o' };
+
+		[BindProperty]
 		public string FirstName { get; set; }
 
 		[BindProperty]
