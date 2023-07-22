@@ -12,22 +12,30 @@
 				$errorMessage.remove()
 			}
 
+			var html = '<div class="row mt-2 align-items-center">\
+								<div class="col-9 col-sm-11">\
+									<textarea type="text" class="answer-input form-control" placeholder="Add answer" data-val="true" data-val-required="The Answer field is required."\
+									id="Questions_' + questionIndex + '__Answers_' + answerIndex + '__AnswerContent" style="height:50px;"\
+									name="Questions[' + questionIndex + '].Answers[' + answerIndex + '].AnswerContent" value=""></textarea>\
+									<span class="answer-error text-danger field-validation-valid" data-valmsg-for="Questions[' + questionIndex + '].Answers[' + answerIndex + '].AnswerContent"\
+									data-valmsg-replace="true"></span>\
+								</div>\
+								<div class="col-3 col-sm-1">\
+									<div class="row">\
+										<div class="col-6 d-flex justify-content-center align-items-center">\
+											<input type="checkbox" title="Correct answer" class="is-correct-input" data-val="true" data-val-required="The Correct field is required."\
+											id="Questions_' + questionIndex + '__Answers_' + answerIndex + '__IsCorrect" style="height:18px; width:18px;"\
+											name="Questions[' + questionIndex + '].Answers[' + answerIndex + '].IsCorrect" value="true">\
+										</div>\
+										<div class="col-6">\
+											<button type="button" class="remove-answer btn btn-primary">\
+												<i class="bi bi-x-lg"></i>\
+											</button>\
+										</div>\
+									</div>\
+								</div>\
+						</div>'
 
-			var html = '<div class="row mt-2 g-1">\
-									<div class="col-11">\
-										<input type="text" class="answer-input form-control" placeholder="Add answer" data-val="true" data-val-required="The Answer field is required."\
-										id="Questions_' + questionIndex + '__Answers_' + answerIndex + '__AnswerContent"\
-										name="Questions[' + questionIndex + '].Answers[' + answerIndex + '].AnswerContent" value="">\
-										<span class="answer-error text-danger field-validation-valid" data-valmsg-for="Questions[' + questionIndex + '].Answers[' + answerIndex + '].AnswerContent"\
-										data-valmsg-replace="true"></span>\
-									</div>\
-									<div class="col-1">\
-										<input type="checkbox" title="Correct answer" class="is-correct-input col-5" data-val="true" data-val-required="The Correct field is required."\
-										id="Questions_' + questionIndex + '__Answers_' + answerIndex + '__IsCorrect"\
-										name="Questions[' + questionIndex + '].Answers[' + answerIndex + '].IsCorrect" value="true">\
-										<button type="button" class="remove-answer btn btn-primary col-5">-</button>\
-									</div>\
-								</div>'
 			$(this).before(html)
 
 			$("form").removeData("validator")
@@ -37,10 +45,10 @@
 
 
 	$(document).on('click', ".remove-answer", function () {
-		var $answers = $(this).parent().parent().siblings().children('div').children('.answer-input')
-		var $spanAlerts = $(this).parent().parent().siblings().children('div').children('.answer-error')
-		var $questionCheckboxes = $(this).parent().parent().siblings().children('div').children('.is-correct-input')
-		var questionIndex = $(this).parent().parent().siblings().children('div').children('.question-input').attr('id').charAt(10);
+		var $answers = $(this).parent().parent().parent().parent().siblings().children('div').children('.answer-input')
+		var $spanAlerts = $(this).parent().parent().parent().parent().siblings().children('div').children('.answer-error')
+		var $questionCheckboxes = $(this).parent().parent().parent().parent().siblings().children('div').children('div').children('div').children('.is-correct-input')
+		var questionIndex = $(this).parent().parent().parent().parent().siblings().children('div').children('.question-input').attr('id').charAt(10);
 
 		$answers.each(function (index) {
 			$(this).attr('id', 'Questions_' + questionIndex + '__Answers_' + index + '__AnswerContent')
@@ -56,7 +64,7 @@
 			$(this).attr('name', 'Questions[' + questionIndex + '].Answers[' + index + '].IsCorrect')
 		})
 
-		$(this).parent().parent().remove()
+		$(this).parent().parent().parent().parent().remove()
 
 		$("form").removeData("validator")
 		$("form").removeData("unobtrusiveValidation")
@@ -65,7 +73,7 @@
 
 
 	$(document).on('click', '.remove-question', function () {
-		$(this).parent().parent().parent().remove()
+		$(this).parent().parent().parent().parent().parent().remove()
 
 		var $questions = $('.question-input')
 		var $questionErrors = $('.question-error')
@@ -76,7 +84,7 @@
 
 			var $questionAnswers = $(this).parent().parent().siblings().children('div').children('.answer-input')
 			var $questionAnswersErrors = $(this).parent().parent().siblings().children('div').children('.answer-error')
-			var $isAnswerCorrect = $(this).parent().parent().siblings().children('div').children('.is-correct-input')
+			var $isAnswerCorrect = $(this).parent().parent().siblings().children('div').children('div').children('div').children('.is-correct-input')
 
 			$questionAnswers.each(function (jndex) {
 				$(this).attr('id', 'Questions_' + index + '__Answers_' + jndex + '__AnswerContent')
@@ -106,46 +114,73 @@
 	$("#add-question").click(function () {
 		var questionIndex = $('.question-input').length
 
-		var html = '<div class="question container mt-5">\
-										<div class="row g-3">\
-											<div class="col-11">\
-												<input type="text" class="question-input form-control form-control-lg" placeholder="Add question" data-val="true"\
-												data-val-required="The Question field is required." id="Questions_' + questionIndex + '__QuestionContent"\
-												name="Questions[' + questionIndex + '].QuestionContent" value="" >\
-												<span class="question-error text-danger field-validation-error" data-valmsg-for="Questions[' + questionIndex + '].QuestionContent" data-valmsg-replace="true"></span>\
-											</div>\
-											<div class="col-1">\
-												<button type="button" class="remove-question btn btn-lg btn-primary col-11">-</button>\
-											</div>\
-										</div>\
-										<div class="row mt-3 g-1" >\
-											<div class="col-11" >\
-												<input type="text" class="answer-input form-control" placeholder="Add answer" data-val="true" data-val-required="The Answer field is required."\
-												id="Questions_' + questionIndex + '__Answers_0__AnswerContent" name="Questions[' + questionIndex + '].Answers[0].AnswerContent" value="">\
-												<span class="answer-error text-danger field-validation-valid" data-valmsg-for="Questions[' + questionIndex + '].Answers[0].AnswerContent" data-valmsg-replace="true"></span>\
-											</div>\
-											<div class="col-1">\
-												<input type="checkbox" title="Correct answer" class="is-correct-input col-5" data-val="true" data-val-required="The Correct field is required."\
-												id="Questions_' + questionIndex + '__Answers_0__IsCorrect"\
-												name="Questions[' + questionIndex + '].Answers[0].IsCorrect" value="true">\
-												<button type="button" class="remove-answer btn btn-primary col-5">-</button>\
-											</div>\
-										</div>\
-										<div class="row mt-2 g-1" >\
-											<div class="col-11" >\
-												<input type="text" class="answer-input form-control" placeholder="Add answer" data-val="true" data-val-required="The Answer field is required."\
-												id="Questions_' + questionIndex + '__Answers_1__AnswerContent" name="Questions[' + questionIndex + '].Answers[1].AnswerContent" value="">\
-												<span class="answer-error text-danger field-validation-valid" data-valmsg-for="Questions[' + questionIndex + '].Answers[1].AnswerContent" data-valmsg-replace="true"></span>\
-											</div>\
-											<div class="col-1">\
-												<input type="checkbox" title="Correct answer" class="is-correct-input col-5" data-val="true" data-val-required="The Correct field is required."\
-												id="Questions_' + questionIndex + '__Answers_1__IsCorrect"\
-												name="Questions[' + questionIndex + '].Answers[1].IsCorrect" value="true">\
-												<button type="button" class="remove-answer btn btn-primary col-5">-</button>\
-											</div>\
-										</div>\
-										<button type="button" class="add-answer btn btn-primary mt-2" >+</button>\
-									</div>'
+		var html = '<div class="question container mt-5 px-0">\
+						<div class="row align-items-center">\
+							<div class="col-9 col-sm-11">\
+								<textarea type="text" class="question-input form-control form-control-lg" placeholder="Add question" data-val="true"\
+								data-val-required="The Question field is required." id="Questions_' + questionIndex + '__QuestionContent"\
+								name="Questions[' + questionIndex + '].QuestionContent" value="" style="height:75px;" ></textarea>\
+								<span class="question-error text-danger field-validation-error" data-valmsg-for="Questions[' + questionIndex + '].QuestionContent" data-valmsg-replace="true"></span>\
+							</div>\
+							<div class="col-3 col-sm-1">\
+								<div class="row" >\
+									<div class="col-6 d-flex justify-content-center align-items-center">\
+										<input disabled hidden style="height:18px; width:18px;"/>\
+									</div>\
+									<div class="col-6">\
+										<button type="button" class="remove-question btn btn-primary">\
+											<i class="bi bi-x-lg"></i>\
+										</button>\
+									</div>\
+								</div>\
+							</div>\
+						</div>\
+						<div class="row mt-2 align-items-center" >\
+							<div class="col-9 col-sm-11">\
+								<textarea type="text" class="answer-input form-control" placeholder="Add answer" data-val="true" data-val-required="The Answer field is required."\
+								id="Questions_' + questionIndex + '__Answers_0__AnswerContent" name="Questions[' + questionIndex + '].Answers[0].AnswerContent" value=""></textarea>\
+								<span class="answer-error text-danger field-validation-valid" data-valmsg-for="Questions[' + questionIndex + '].Answers[0].AnswerContent" data-valmsg-replace="true"></span>\
+							</div>\
+							<div class="col-3 col-sm-1">\
+								<div class="row">\
+									<div class="col-6 d-flex justify-content-center align-items-center">\
+										<input type="checkbox" title="Correct answer" class="is-correct-input" data-val="true" data-val-required="The Correct field is required."\
+										id="Questions_' + questionIndex + '__Answers_0__IsCorrect" style="height:18px; width:18px;"\
+										name="Questions[' + questionIndex + '].Answers[0].IsCorrect" value="true">\
+									</div>\
+									<div class="col-6">\
+										<button type="button" class="remove-answer btn btn-primary">\
+											<i class="bi bi-x-lg"></i>\
+										</button>\
+									</div>\
+								</div>\
+							</div>\
+						</div>\
+						<div class="row mt-2 align-items-center" >\
+							<div class="col-9 col-sm-11">\
+								<textarea type="text" class="answer-input form-control" placeholder="Add answer" data-val="true" data-val-required="The Answer field is required."\
+								id="Questions_' + questionIndex + '__Answers_1__AnswerContent" name="Questions[' + questionIndex + '].Answers[1].AnswerContent" value=""></textarea>\
+								<span class="answer-error text-danger field-validation-valid" data-valmsg-for="Questions[' + questionIndex + '].Answers[1].AnswerContent" data-valmsg-replace="true"></span>\
+							</div>\
+							<div class="col-3 col-sm-1">\
+								<div class="row">\
+									<div class="col-6 d-flex justify-content-center align-items-center">\
+										<input type="checkbox" title="Correct answer" class="is-correct-input" data-val="true" data-val-required="The Correct field is required."\
+										id="Questions_' + questionIndex + '__Answers_1__IsCorrect" style="height:18px; width:18px;"\
+										name="Questions[' + questionIndex + '].Answers[1].IsCorrect" value="true">\
+									</div>\
+									<div class="col-6">\
+										<button type="button" class="remove-answer btn btn-primary">\
+											<i class="bi bi-x-lg"></i>\
+										</button>\
+									</div>\
+								</div>\
+							</div>\
+						</div>\
+						<button type="button" class="add-answer btn btn-primary mt-2">\
+							<i class="bi bi-plus-lg"></i>\
+						</button>\
+					</div>'
 
 		$(".questions").append(html)
 
