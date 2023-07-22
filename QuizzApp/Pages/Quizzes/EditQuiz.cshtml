@@ -4,8 +4,8 @@
 }
 <div class="container">
 	<div class="row d-flex justify-content-between">
-		<h2 class='header text-primary col-5'>Edit Your quizz</h2>
-		<div class="col-2 text-end">
+		<h2 class='header text-primary col-7'>Edit Your quizz</h2>
+		<div class="col-5 col-sm-4 col-lg-2 text-end">
 			<a asp-page="/Quizzes/DeleteQuiz" asp-route-quizId="@Model.QuizId" class="btn btn-danger text-white text-decoration-none">Delete quizz</a>
 		</div>
 	</div>
@@ -15,12 +15,12 @@
 	<input asp-for="QuizId" type="hidden" value="@Model.QuizId" />
 	<div class="container mb-5">
 		<div class="row d-flex justify-content-between">
-			<div class="col-5">
+			<div class="col-5 px-0">
 				<label asp-for="Quiz.Title" class="col-form-label-lg"></label>
 				<input asp-for="Quiz.Title" type="text" class="form-control form-control-lg" placeholder="Quiz title" />
 				<span asp-validation-for="Quiz.Title" class="text-danger"></span>
 			</div>
-			<div class="col-5">
+			<div class="col-5 px-0">
 				<label asp-for="Quiz.Threshold" class="col-form-label-lg"></label>
 				<input asp-for="Quiz.Threshold" type="range" class="form-range" min="0" max="100" step="5" oninput="updateInputValue(this.value)">
 				<output id="slider-value">@Model.Quiz.Threshold</output>
@@ -30,41 +30,62 @@
 	<div class='questions mb-2 mt-4'>
 		@for(int i = 0; i < Model.Questions.Count; i++)
 		{
-			<div class='question container mb-4'>
-				<div class='row'>
-					<div class="col-11">
-						<input asp-for='Questions[i].QuestionContent' type='text' class='question-input form-control form-control-lg' placeholder='Add question' />
+			<div class="question container mt-5 px-0">
+				<div class="row align-items-center">
+					<div class="col-9 col-sm-11">
+						<textarea asp-for='Questions[i].QuestionContent' type='text' class='question-input form-control form-control-lg' style="height:75px;" placeholder='Add question'></textarea>
 						<span asp-validation-for="Questions[i].QuestionContent" class="question-error text-danger"></span>
 					</div>
-					<div class="col-1">
-						<button type="button" class="remove-question btn btn-lg btn-primary col-11">-</button>
+					<div class="col-3 col-sm-1">
+						<div class="row">
+							<div class="col-6 d-flex justify-content-center align-items-center">
+								<input disabled hidden style="height:18px; width:18px;" />
+							</div>
+							<div class="col-6">
+								<button type="button" class="remove-question btn btn-primary">
+									<i class="bi bi-x-lg"></i>
+								</button>
+							</div>
+						</div>
 					</div>
 				</div>
 				@for (int j = 0; j < Model.Questions[i].Answers.Count; j++)
 				{
-					<div class='row mt-2 g-1'>
-						<div class='col-11'>
-							<input asp-for='Questions[i].Answers[j].AnswerContent' type='text' class='answer-input form-control' placeholder='Add answer' />
+					<div class='row mt-3 align-items-center'>
+						<div class='col-9 col-sm-11'>
+							<textarea asp-for='Questions[i].Answers[j].AnswerContent' type='text' class='answer-input form-control' style="height:50px;" placeholder='Add answer'></textarea>
 							<span asp-validation-for="Questions[i].Answers[j].AnswerContent" class="answer-error text-danger"></span>
 						</div>
-						<div class="col-1">
-							<input asp-for='Questions[i].Answers[j].IsCorrect' type="checkbox" title="Correct answer" class="is-correct-input col-5" />
-							<button type="button" class="remove-answer btn btn-primary col-5">-</button>
+						<div class="col-3 col-sm-1">
+							<div class="row">
+								<div class="col-6 d-flex justify-content-center align-items-center">
+									<input asp-for='Questions[i].Answers[j].IsCorrect' type="checkbox" title="Correct answer" style="height:18px; width:18px;" class="is-correct-input" />
+								</div>
+								<div class="col-6">
+									<button type="button" class="remove-answer btn btn-primary">
+										<i class="bi bi-x-lg"></i>
+									</button>
+								</div>
+							</div>
 						</div>
 					</div>
 				}
-				<button type='button' class='add-answer btn btn-primary mt-2'>+</button>
+				<button type="button" class="add-answer btn btn-primary mt-2">
+					<i class="bi bi-plus-lg"></i>
+				</button>
 			</div>
 		}
 		
 	</div>
 
 	<div class="container">
-		<button type='button' id='add-question' class='btn btn-primary mt-3 col-2'>Add next question</button>
+		<div class="row">
+			<button type='button' id='add-question' class='btn btn-primary mt-3 col-6 col-sm-2'>Add next question</button>
+		</div>
 	</div>
 
-	<div class='row justify-content-center'>
-		<button type='submit' class='create_quiz btn btn-lg btn-primary mt-3 col-2'>Edit quiz</button>
+	<div class='row justify-content-center mt-4'>
+		<button type='submit' class='create_quiz btn btn-lg btn-primary mt-3 col-6 col-sm-2'>Edit quiz</button>
 	</div>
 </form>
 
